@@ -19,16 +19,16 @@ The content covers Unix/Linux command-line interfaces, shell scripting, file man
 ```text
 .
 ├── README.md
-├── Week_01.md    # Introduction to Unix/Linux & Shell Environment
-├── Week_02.md    # File System Navigation & Directory Operations
-├── Week_03.md    # File Permissions, Ownership & Links
-├── Week_04.md    # Text Processing & Filters (grep, sed, awk)
-├── Week_05.md    # I/O Redirection & Pipelines
-├── Week_06.md    # Process Management & Signals
-├── Week_07.md    # Environment Variables & Shell Configuration
-├── Week_08.md    # Shell Scripting Basics & Control Structures
-├── Week_09.md    # Advanced Shell Scripting & Functions
-└── Week_10.md    # Networking Commands, Archiving & System Utilities
+├── Week_01.md     I
+├── Week_02.md     
+├── Week_03.md     
+├── Week_04.md    
+├── Week_05.md    
+├── Week_06.md    
+├── Week_07.md    
+├── Week_08.md    
+├── Week_09.md   
+└── Week_10.md    
 ```
 
 # Web content recomendation

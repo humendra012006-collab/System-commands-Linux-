@@ -281,7 +281,8 @@ cat > file2.md # Press enter and write content of file, to exit press Ctrl+d
 ```
 3. Using `echo` : The echo command in Bash is used to display text, variables, or messages to the terminal,can be used for creating file with small content in it.
 ```bash
-echo "Hello world" > file1.txt
+echo "Hello world" > file1.txt # Overwrite content if exist, created otherwise
+echo "Hello world2" >> file1.txt # Add content if exist, created otherwise
 echo -e "Hello world\nThis is second line." > file2.txt
 ```
 - `-e` : Enables Escape Sequences
@@ -290,7 +291,11 @@ echo -e "Hello world\nThis is second line." > file2.txt
 nano file.txt # create file and open editor
 nano # open editor
 ```
-5. Using `>` : This create empty file
+5. Using `vi` OR `vim` editor, editor for programers, more about it in week 2.
+```bash
+vi test.cpp
+```
+6. Using `>` : This create empty file
 ```bash
 user@host:~$ > file1.md
 ```
@@ -498,6 +503,28 @@ In Linux filesystems like ext4, block size dictates the minimum allocation bound
 - `which` : Print the location of comand specified (Example : `which mkdir`, output : `/usr/bin/mkdir`, even all commands are here in `/usr/bin`)
 
 - `type` : The `type` command in Linux is a useful utility for identifying how the shell will interpret a given command. It provides information on whether a command is a shell built-in, external binary, function, or alias, helping users understand the source of the command and its behavior. The command is particularly helpful when troubleshooting or exploring system utilities, as it reveals whether a command is being executed as an alias, keyword, or a binary file from the disk (Example : `type <command_name>`).
+
+- `readlink` : Print resolved symbolic links or canonical file names, use `-f` for recursive depth (Example: readlink -f /usr/bin/pico output `/usr/bin/nano`).
+
+- `greap` : Powerful command-line utility in Unix/Linux used to search for patterns (plain text or regular expressions) within files or streams. It outputs the lines that match the given pattern, making it invaluable for developers when searching through code, logs, or configuration files (More on Weeks 4 when study `RE`).
+
+- `tar` : The command bundles multiple files or directories into an archive without
+compression. To create a new TAR file, you must add the `-c` option. Then, use the `-f` flag to specify the archive’s name. Regardless of the extension, you can unpack a TAR file.
+    ```bash
+    tar [options] tar_file_name file1 dir1/ # Creat new tar file
+    tar [options] tar_file_name # Unpack tar file
+    tar -cf my_tar.tar first_project (make tar archive)
+    tar -xf my_tar.tar (untar/unpack the tar file)
+    ```
+
+- `zip` : The command compresses one or multiple files into a ZIP archive,
+reducing their size. use `-r` for recursive . To unzip the zipped file, use: `unzip` also `-d` can be used to specify the path where to unzip.
+    ```bash
+    zip [options] [zip_file_name.zip] file1 dir1 # Creat a zip file 
+    unzip [options] [zip_file_name.zip]
+    zip -r project.zip /path/to/project # Creat zip file of entire directory structure of project
+    unzip project.zip -d ~/dir3/copy_project # unzip at ~/dir3/copy_project
+    ```
  
 
 ## How to Find New Commands

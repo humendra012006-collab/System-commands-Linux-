@@ -19,7 +19,7 @@ The content covers Unix/Linux command-line interfaces, shell scripting, file man
 ```text
 .
 ├── README.md
-├── Week_01.md     I
+├── Week_01.md    
 ├── Week_02.md     
 ├── Week_03.md     
 ├── Week_04.md    

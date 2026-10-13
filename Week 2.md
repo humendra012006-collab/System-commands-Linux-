@@ -87,3 +87,118 @@ It is not required to know both the editors, those who find `vi` hard can use `e
 <div style="text-align: left;">
 <img src="./images/emacs_2.png" alt="Editor" width="600" >
 </div>
+
+---
+
+# Network & ssh
+Accessing remote machines on command line.
+<div style="text-align: left;">
+<img src="./images/network_1.png" alt="Editor" width="600" >
+</div>
+
+## Ways to gain remote access
+- VPN access
+- ssh tunneling
+- Remote desktop : x2go, rdp, pcoip,
+- Desktop over browser: Apache Guacomole
+- Commercial, over internet : Teamviewer, AnyDesk,Zoho assist, ...
+
+## Some important ports
+|Port Number | Name | Discription |
+| --- | --- | --- |
+| 21 | ftp | File transfer |
+| 22 | ssh | Secure Shell |
+| 25 | smtp | Simple Mail Transfer Protocol |
+| 80 | http | Hypertext Tranfer Protocol |
+| 443 | https | Secure Hypertext Tranfer Protocol |
+| 631 | cups | Common Unix Printing System |
+| 3306 | mysql | MySQL database (differ with software) |
+
+## SELinux
+SELinux (Security-Enhanced Linux) is a mandatory access control (MAC) security system built into the Linux kernel that enforces strict policies to control what users and programs can access, preventing unauthorized actions even if a process is compromised.
+
+- **SELinux is recommended for all publicly visible servers**
+- Ubuntu uses **AppArmor** as its default MAC system, but you can install SELinux manually
+- Security Enhanced Linux mode available on Ubuntu too,
+- apart from server grade flavors like CentOS, Fedora,
+- RHEL, SuSE Linux etc.,
+- Additional layer of access control on files to services
+- Role Based Access Control
+- Process sandboxing, least privilege access for subjects
+- Check using `ls -lZ` and `ps -eZ`
+- RBAC items: user (unconfined_u), role(object_r), type (user_home_t), level (s0)
+- Modes: disabled, enforcing, permissive
+- Tools: semanage, restorecon
+
+## Network tools
+|Tools | Discription |
+| --- | --- |
+| ping |  To see if the remote machine is up |
+| traceroute |  Diagnostics the hop timings to the remote machine |
+| nslookup |  Ask for conversion of IP address to name |
+| dig |  DNS lookup utility |
+| netstat |  Print network connections |
+| mxtoolbox.com |  For help with accessibility from public network |
+| whois lookup |  Who owns which domain name |
+| nmap |  (careful !) Network port scanner |
+| wireshark |  (careful !) Network protocol analyzer |
+
+- `ping` : Checks whether a remote machine is reachable and measures round-trip response time.
+  - Use case: Check whether a server is responding or troubleshoot connectivity.
+  ```
+  ping -c 4 google.com
+  # Sends 4 ping requests and displays response times and packet loss
+  ```
+- `traceroute` : Shows the network hops packets take to reach a destination and the response time at each hop.
+  - Use case: Identify where network delays or routing issues may occur.
+  ```
+  traceroute google.com
+  # Displays the route taken to reach google.com
+  ```
+- `nslookup` : Queries DNS to find the IP address associated with a domain or the domain associated with an IP address.
+  - Use case: Troubleshoot DNS resolution problems.
+  ```
+  nslookup google.com
+  # Displays the DNS records returned for google.com, commonly including its IP addresses
+  ```
+- `dig` : Performs detailed DNS queries for records such as A, AAAA, MX, NS, and TXT.
+  - Use case: Investigate DNS configuration and troubleshoot domain resolution.
+  ```
+  dig google.com A
+  # Queries the A record to find IPv4 addresses for google.com
+  ```
+- `netstat` : Displays network connections, listening ports, routing tables, and network statistics.
+  - Use case: Check active connections or identify services listening on ports.
+  ```
+  netstat -tuln
+  # Shows listening TCP/UDP ports and numeric addresses on Linux
+  ```
+- `mxtoolbox.com` : An online collection of tools for checking DNS records, email configuration, blacklists, and network-related issues.
+  - Use case: Troubleshoot email delivery, MX records, DNS configuration, and public service availability.
+  ```
+  https://mxtoolbox.com/
+  # Open the website and enter a domain to check its DNS or mail server configuration
+  ```
+- `whois lookup` : Retrieves domain registration information, such as registrar, registration dates, and nameservers, when publicly available.
+  - Use case: Find out which registrar manages a domain and review its registration details.
+  ```
+  whois example.com
+  # Displays available WHOIS registration information for example.com
+  ```
+- `nmap` : Scans hosts and ports to discover network services and assess network exposure. Use only on systems you own or have permission to test.
+  - Use case: Check which ports are open on your own server.
+  ```
+  nmap -sV 192.168.1.10
+  # Scans the target's ports and attempts to identify running service versions
+  ```
+- `wireshark` : A graphical network protocol analyzer that captures and inspects packets traveling across a network.
+  - Use case: Troubleshoot connection failures, DNS problems, retransmissions, and protocol-level issues.
+  ```
+  wireshark
+  # Opens Wireshark; select an authorized network interface to capture traffic
+  ```
+### Quick notes
+- `ping` and `traceroute` may be blocked by firewalls, so a failed response does not always mean the destination is down.
+- `traceroute` may be named `tracepath` on Linux or `tracert` on Windows.
+- `netstat` may not be installed by default on newer Linux systems; `ss -tuln` is a common alternative.
+- `nmap` and `wireshark` should be used responsibly and only on networks you are authorized to inspect.

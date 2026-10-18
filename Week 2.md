@@ -134,6 +134,7 @@ SELinux (Security-Enhanced Linux) is a mandatory access control (MAC) security s
 |Tools | Discription |
 | --- | --- |
 | ping |  To see if the remote machine is up |
+| ifconfig -a | all network interfaces (active and inactive) |
 | traceroute |  Diagnostics the hop timings to the remote machine |
 | nslookup |  Ask for conversion of IP address to name |
 | dig |  DNS lookup utility |
@@ -149,6 +150,8 @@ SELinux (Security-Enhanced Linux) is a mandatory access control (MAC) security s
   ping -c 4 google.com
   # Sends 4 ping requests and displays response times and packet loss
   ```
+- `ifconfig -a` : Used in Linux to configure and manage network interfaces. It provides detailed information about active and inactive interfaces, including IP addresses, netmasks, and MAC addresses.
+
 - `traceroute` : Shows the network hops packets take to reach a destination and the response time at each hop.
   - Use case: Identify where network delays or routing issues may occur.
   ```

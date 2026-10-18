@@ -279,7 +279,7 @@ touch Desktop # This will change the time stamp with current time (makes it look
 ```bash
 cat > file2.md # Press enter and write content of file, to exit press Ctrl+d
 ```
-3. Using `echo` : The echo command in Bash is used to display text, variables, or messages to the terminal,can be used for creating file with small content in it.
+3. Using `echo` : The echo command in Bash is used to display text, variables, or messages to the terminal,can be used for creating file with small content in it (It can be also use to print the current session user name `echo $USER`).
 ```bash
 echo "Hello world" > file1.txt # Overwrite content if exist, created otherwise
 echo "Hello world2" >> file1.txt # Add content if exist, created otherwise
@@ -484,11 +484,11 @@ In Linux filesystems like ext4, block size dictates the minimum allocation bound
     ```
 - `unalias` : Removes one or more defined shell aliases, either individually or all at once, from the current shell session (cannot remove built-in shell commands; it only affects user-defined aliases).
 
-- `whoami` : Prints the effective username of the current user executing the command. It is a quick way to verify the identity of the user in the current shell session, especially after switching users with su or similar commands.
+- `whoami` : Prints the effective username of the current user executing the command. It is a quick way to verify the identity of the user in the current shell session, especially after switching users with su or similar commands (also may use `echo $USER`).
 
 - `who` : Displays information about all users currently logged into the system. It provides details such as the username, terminal, login time, and the source of the login (e.g., IP address or hostname). It is useful for understanding the global state of user sessions on the system.
 
-- `file` : Display file type (like `file filename` tell about file) and also `file *` display 'fileName : file type' of pwd.
+- `file` : Display file type (like `file filename` tell about file) and with `file *` display 'fileName : file type' of pwd.
 
 - `stat` : Display detailed information about a file or directory — including size, permissions, ownership, timestamps, and inode details.
 
@@ -525,6 +525,7 @@ reducing their size. use `-r` for recursive . To unzip the zipped file, use: `un
     zip -r project.zip /path/to/project # Creat zip file of entire directory structure of project
     unzip project.zip -d ~/dir3/copy_project # unzip at ~/dir3/copy_project
     ```
+- `diff` : A powerful utility used to compare the contents of two files line by line
  
 ## How to Find New Commands
 One need not to search on web to learn commands of Linux, Linux it's self provide some commands to explore more commands by writing relevent word to find required commands.

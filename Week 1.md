@@ -1,5 +1,5 @@
 # Basic Command for Linux navigation
-Detailed discription will be mentioned later.
+Detailed discription of each command in bleow sections.
 - Print on screen `echo`
 - Comments in bash `#`
 - Current working directory `pwd`
@@ -98,6 +98,7 @@ user@host:~$ man ls # Here man is Command $ ls is Argument
 ls --help
 ```
 2. Using `man` Pages: This opens the manual page for the command, which provides detailed documentation (using `-k` similar as `apropos` command).
+- If some command is feature of shell (like `coproc`), then there is no manual for it then use `help coproc`.
     - We can also use man with man page section (optional).
     ```bash
     man <section number> <argument>
@@ -234,7 +235,7 @@ Understanding User Ownership and Permissions in Linux : Different users in the o
 ### Using `sudo` for Administrative Privileges
 To perform administrative tasks as a regular user, you typically use the `sudo` command, which stands for "superuser do." This command allows you to execute commands with root privileges without needing to switch to the root user. Using sudo helps maintain security by granting temporary elevated privileges, thus minimizing the risk of accidental system changes.\
 
-**Examples of Using sudo**
+**Examples of Using sudo (super do)**
 1. Changing File Ownership: If you want to change the ownership of a file called `important.txt` to a user named `alice`, you would run:
 - This command changes the owner of `important.txt` to `alice`, allowing her to modify it as needed.
 ```bash
@@ -427,7 +428,7 @@ In Linux filesystems like ext4, block size dictates the minimum allocation bound
 - Linux manages RAM in pages (standard size is 4 KB on x86_64). Having a filesystem block size equal to the architecture's memory page size (4 KB) optimizes memory mapping (page cache) and prevents additional translation overhead during page faults and buffer cache management.
 
 ## Some More Commands
-- `ps` : used to display information about currently running processes on a system. It provides details such as process IDs (PIDs), CPU and memory usage, and the commands that initiated the processes (Use `-A` or `-e` for all process details).
+- `ps` : used to display information about currently running processes on a system. It provides details such as process IDs (PIDs), CPU and memory usage, and the commands that initiated the processes (Use `-A` or `-e` for all process details, `--forest` for parent-child relation of different process).
 
 - `uname` : Print system information, stands for "Unix Name," and it is designed to give you key information about your Linux machine, such as the kernel version, operating system, hardware architecture, and more (Use `-a` for all system information). 
 

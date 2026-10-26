@@ -137,11 +137,13 @@ Single quotes must be used to pass the `regex` so that shell treat it as literal
 | `?` | Zero or one of preceding character / expression |
 | `\|` | Logical OR over the patterns |
 
-## Examples
-Suppose a file `names.txt` is present with the given content below.
 
-<pre style="background-color: #1e1e1e; color: #d4d4d4; padding: 12px; font-family: monospace; border-radius: 6px;">
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt
+## Linux Command-Line Exercises: grep and egrep
+Below is the complete record of file inspection and pattern-matching commands performed on names.txt.
+
+1. File Inspection & Basic Matching
+```bash
+gphani@icme:~$ cat names.txt
 MM22B901 Mary Manickam
 ED22B902 Raman Singh
 ME22B903 Umair Ahmad
@@ -150,85 +152,119 @@ EE22B905 Anu K. Jain
 NA22B906 Anupama Sridhar
 PH22B907 Vel Sankaran
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ grep 'Sa' names.txt
-CS22B904 Charles M. <span style="color: #f14c4c; font-weight: bold;">Sa</span>gayam
-PH22B907 Vel <span style="color: #f14c4c; font-weight: bold;">Sa</span>nkaran
+gphani@icme:~$ grep 'Sa' names.txt
+CS22B904 Charles M. Sagayam
+PH22B907 Vel Sankaran
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep 'Sa'
-CS22B904 Charles M. <span style="color: #f14c4c; font-weight: bold;">Sa</span>gayam
-PH22B907 Vel <span style="color: #f14c4c; font-weight: bold;">Sa</span>nkaran
+gphani@icme:~$ cat names.txt | grep 'Sa'
+CS22B904 Charles M. Sagayam
+PH22B907 Vel Sankaran
+```
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep '.am' <span style="color: 	#888888"># match single char before 'am'</span>
-MM22B901 Mary Manic<span style="color: #f14c4c; font-weight: bold;">kam</span>
-ED22B902 <span style="color: #f14c4c; font-weight: bold;">Ra</span>man Singh
-CS22B904 Charles M. Saga<span style="color: #f14c4c; font-weight: bold;">yam</span>
-NA22B906 Anu<span style="color: #f14c4c; font-weight: bold;">pam</span>a Sridhar
+2. Wildcards and Literal Characters
+```bash
+# Match single character before 'am'
+gphani@icme:~$ cat names.txt | grep '.am'
+MM22B901 Mary Manickam
+ED22B902 Raman Singh
+CS22B904 Charles M. Sagayam
+NA22B906 Anupama Sridhar
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep '\.' <span style="color: 	#888888"># here dot is litral for grep</span>
-CS22B904 Charles M<span style="color: #f14c4c; font-weight: bold;">.</span> Sagayam
-EE22B905 Anu K<span style="color: #f14c4c; font-weight: bold;">.</span> Jain
+# Literal dot matching (escaped)
+gphani@icme:~$ cat names.txt | grep '\.'
+CS22B904 Charles M. Sagayam
+EE22B905 Anu K. Jain
+```
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep 'an$' <span style="color:#888888"># only those which are at end of line</span>
-PH22B907 Vel Sankar<span style="color: #f14c4c; font-weight: bold;">an</span>
+3. Anchors and Boundaries
+```bash
+# Match 'an' at the end of the line
+gphani@icme:~$ cat names.txt | grep 'an$'
+PH22B907 Vel Sankaran
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep 'an\b' <span style="color:#888888"># only those which are at end of word (word boundary)</span>
-ED22B902 Ram<span style="color: #f14c4c; font-weight: bold;">an</span> Singh
-PH22B907 Vel Sankar<span style="color: #f14c4c; font-weight: bold;">an</span>
+# Match 'an' at a word boundary
+gphani@icme:~$ cat names.txt | grep 'an\b'
+ED22B902 Raman Singh
+PH22B907 Vel Sankaran
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep '^E' <span style="color:#888888"># only those which are at the start of line</span>
-<span style="color: #f14c4c; font-weight: bold;">E</span>D22B902 Raman Singh
-<span style="color: #f14c4c; font-weight: bold;">E</span>E22B905 Anu K. Jain
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep '^e' <span style="color:#888888"># This is case sensitive</span>
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep -i '^e' <span style="color:#888888"># case insensitive using '-i'</span>
-<span style="color: #f14c4c; font-weight: bold;">E</span>D22B902 Raman Singh
-<span style="color: #f14c4c; font-weight: bold;">E</span>E22B905 Anu K. Jain
+# Match lines starting with 'E'
+gphani@icme:~$ cat names.txt | grep '^E'
+ED22B902 Raman Singh
+EE22B905 Anu K. Jain
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep '[ME][ED]'
-<span style="color: #f14c4c; font-weight: bold;">ED</span>22B902 Raman Singh
-<span style="color: #f14c4c; font-weight: bold;">EE</span>22B905 Anu K. Jain
-<span style="color: #f14c4c; font-weight: bold;">ME</span>22B903 Umair Ahmad
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep 'B90[1-4]'
-MM22<span style="color: #f14c4c; font-weight: bold;">B901</span> Mary Manickam
-ED22<span style="color: #f14c4c; font-weight: bold;">B902</span> Raman Singh
-ME22<span style="color: #f14c4c; font-weight: bold;">B903</span> Umair Ahmad
-CS22<span style="color: #f14c4c; font-weight: bold;">B904</span> Charles M. Sagayam
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep 'B90[^1-4]'
-EE22<span style="color: #f14c4c; font-weight: bold;">B905</span> Anu K. Jain
-NA22<span style="color: #f14c4c; font-weight: bold;">B906</span> Anupama Sridhar
-PH22<span style="color: #f14c4c; font-weight: bold;">B907</span> Vel Sankaran
+# Case-sensitive search for starting 'e' (no match)
+gphani@icme:~$ cat names.txt | grep '^e'
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep 'M\{2\}' <span style="color:#888888"># 'M' should occure exactly twice</span>
-<span style="color: #f14c4c; font-weight: bold;">MM</span>22B901 Mary Manickam
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep 'M\{1,2\}'
-<span style="color: #f14c4c; font-weight: bold;">MM</span>22B901 <span style="color: #f14c4c; font-weight: bold;">M</span>ary <span style="color: #f14c4c; font-weight: bold;">M</span>anickam
-<span style="color: #f14c4c; font-weight: bold;">M</span>E22B903 Umair Ahmad
-CS22B904 Charles <span style="color: #f14c4c; font-weight: bold;">M</span>. Sagayam
+# Case-insensitive search using -i
+gphani@icme:~$ cat names.txt | grep -i '^e'
+ED22B902 Raman Singh
+EE22B905 Anu K. Jain
+```
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep '\(ma\).*\1' <span style="color:#888888"># 'ma' occure twice </span>
-ME22B903 U<span style="color: #f14c4c; font-weight: bold;">ma</span>ir Ah<span style="color: #f14c4c; font-weight: bold;">ma</span>d
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | egrep '(ma)+' <span style="color:#888888"># 'ma' should occure one or more times</span>
-ED22B902 Ra<span style="color: #f14c4c; font-weight: bold;">ma</span>n Singh
-ME22B903 U<span style="color: #f14c4c; font-weight: bold;">ma</span>ir Ah<span style="color: #f14c4c; font-weight: bold;">ma</span>d
-NA22B906 Anupa<span style="color: #f14c4c; font-weight: bold;">ma</span> Sridhar
+4. Character Classes and Ranges
+```bash
+gphani@icme:~$ cat names.txt | grep '[ME][ED]'
+ED22B902 Raman Singh
+EE22B905 Anu K. Jain
+ME22B903 Umair Ahmad
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep '\(.a\).*\1'
-MM22B901 <span style="color: #f14c4c; font-weight: bold;">Ma</span>ry <span style="color: #f14c4c; font-weight: bold;">Ma</span>nickam
-ME22B903 U<span style="color: #f14c4c; font-weight: bold;">ma</span>ir Ah<span style="color: #f14c4c; font-weight: bold;">ma</span>d
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep '\(a.\)\{3\}'
-CS22B904 Charles M. S<span style="color: #f14c4c; font-weight: bold;">agaya</span>m
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | grep '\(a.\)\{2\}'
-ED22B902 R<span style="color: #f14c4c; font-weight: bold;">ama</span>n Singh
-CS22B904 Charles M. S<span style="color: #f14c4c; font-weight: bold;">agay</span>am
-NA22B906 Anup<span style="color: #f14c4c; font-weight: bold;">am</span>a Sridhar
-PH22B907 Vel S<span style="color: #f14c4c; font-weight: bold;">anka</span>ran
+gphani@icme:~$ cat names.txt | grep 'B90[1-4]'
+MM22B901 Mary Manickam
+ED22B902 Raman Singh
+ME22B903 Umair Ahmad
+CS22B904 Charles M. Sagayam
 
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | egrep '(ED|ME)'
-<span style="color: #f14c4c; font-weight: bold;">ED</span>22B902 Raman Singh
-<span style="color: #f14c4c; font-weight: bold;">ME</span>22B903 Umair Ahmad
-<span style="color: #4ebf22; font-weight: bold;">gphani@icme</span>:<span style="color: #729fcf; font-weight: bold;">~</span>$ cat names.txt | egrep '(Anu|Raman)'
-ED22B902 <span style="color: #f14c4c; font-weight: bold;">Raman</span> Singh
-EE22B905 <span style="color: #f14c4c; font-weight: bold;">Anu</span> K. Jain
-NA22B906 <span style="color: #f14c4c; font-weight: bold;">Anu</span>pama Sridhar
-<span style="color:#888888"></span>
-</pre>
+# Negated character range
+gphani@icme:~$ cat names.txt | grep 'B90[^1-4]'
+EE22B905 Anu K. Jain
+NA22B906 Anupama Sridhar
+PH22B907 Vel Sankaran
+```
 
+5. Repetitions and Backreferences
+```bash
+# 'M' occurs exactly twice
+gphani@icme:~$ cat names.txt | grep 'M\{2\}'
+MM22B901 Mary Manickam
+
+gphani@icme:~$ cat names.txt | grep 'M\{1,2\}'
+MM22B901 Mary Manickam
+ME22B903 Umair Ahmad
+CS22B904 Charles M. Sagayam
+
+# Backreference: 'ma' occurs twice
+gphani@icme:~$ cat names.txt | grep '\(ma\).*\1'
+ME22B903 Umair Ahmad
+
+# Extended grep: 'ma' occurs 1 or more times
+gphani@icme:~$ cat names.txt | egrep '(ma)+'
+ED22B902 Raman Singh
+ME22B903 Umair Ahmad
+NA22B906 Anupama Sridhar
+
+gphani@icme:~$ cat names.txt | grep '\(.a\).*\1'
+MM22B901 Mary Manickam
+ME22B903 Umair Ahmad
+
+gphani@icme:~$ cat names.txt | grep '\(a.\)\{3\}'
+CS22B904 Charles M. Sagayam
+
+gphani@icme:~$ cat names.txt | grep '\(a.\)\{2\}'
+ED22B902 Raman Singh
+CS22B904 Charles M. Sagayam
+NA22B906 Anupama Sridhar
+PH22B907 Vel Sankaran
+```
+
+6. Alternation (egrep)
+```bash
+# Here | is used as OR in regex
+gphani@icme:~$ cat names.txt | egrep '(ED|ME)'
+ED22B902 Raman Singh
+ME22B903 Umair Ahmad
+
+gphani@icme:~$ cat names.txt | egrep '(Anu|Raman)'
+ED22B902 Raman Singh
+EE22B905 Anu K. Jain
+NA22B906 Anupama Sridhar
+```

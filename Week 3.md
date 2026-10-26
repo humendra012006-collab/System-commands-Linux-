@@ -105,12 +105,13 @@ A file descriptor (FD) is a non-negative integer that the operating system assig
 
 ## `tee` Command
 The tee command in Linux is used to read from standard input and write the output simultaneously to both standard output (the terminal) and one or more files. It is particularly useful when you want to view the output of a command while also saving it to a file.
+- Use `tee -a file_name` to append.
 ```bash
 # Syntax
 command | tee [OPTIONS] [FILE...]
 # Example
-ls -l /usr/bin > list_file.txt
-ls -l /usr/bin > file1 file2 # both files have same content in it
+ls -l /usr/bin | tee file1.txt # write output to file1
+ls -l /usr/bin | tee -a file2.txt # append output to file2
 ```
 <div style="text-align: left;">
 <img src="./images/tee.png" alt="Editor" width="700" >
@@ -491,3 +492,5 @@ When any command or script finishes running, it returns an integer value to the 
 - `sleep` : Used to pause the execution of a script or command for a specified duration (gives the time delay).
 
 - `bc` : A command‑line calculator that supports interactive calculations, scripting, variables, and advanced math functions via the `-l` math library. It uses C‑like syntax and can perform operations such as addition, division, exponentiation, trigonometric functions, and base conversions.
+
+- `test` : Evaluates conditional expressions, returning 0 if true and 1 if false, and is widely used in shell scripting for file checks, string comparisons, and numeric tests (use `test -e file_name` to check if file exists or not).

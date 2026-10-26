@@ -428,7 +428,7 @@ In Linux filesystems like ext4, block size dictates the minimum allocation bound
 - Linux manages RAM in pages (standard size is 4 KB on x86_64). Having a filesystem block size equal to the architecture's memory page size (4 KB) optimizes memory mapping (page cache) and prevents additional translation overhead during page faults and buffer cache management.
 
 ## Some More Commands
-- `ps` : used to display information about currently running processes on a system. It provides details such as process IDs (PIDs), CPU and memory usage, and the commands that initiated the processes (Use `-A` or `-e` for all process details, `--forest` for parent-child relation of different process).
+- `ps` : used to display information about currently running processes on a system. It provides details such as process IDs (PIDs), CPU and memory usage, and the commands that initiated the processes (Use `-A` or `-e` for all process details, `--forest` for parent-child relation of different process or `pstree` same).
 
 - `uname` : Print system information, stands for "Unix Name," and it is designed to give you key information about your Linux machine, such as the kernel version, operating system, hardware architecture, and more (Use `-a` for all system information). 
 

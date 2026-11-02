@@ -1,4 +1,4 @@
-# Understand Shell Features And Regex 
+# Understand Shell Features And Regex (Shell variables - Week 5)
 When we type a command and hit Enter, the shell doesn't just pass our text directly to the OS. Instead, it processes the command line through a series of expansion and redirection steps before executing the command (like: Shell expansion, Parameter expansion, Brace expansion) .
 - Note : Week 4 containt Only `regex` and `string commands` but to know the difference Shell Features topic is added as well.
 - This is different from **regex**, where text-processing utilities like `grep`, `sed`, and `awk` supports **regex** which is not resolved by shell.
@@ -239,7 +239,7 @@ ED22B902 Raman Singh
 EE22B905 Anu K. Jain
 ME22B903 Umair Ahmad
 
-gphani@icme:~$ cat names.txt | grep 'B90[1-4]'
+gphani@icme:~$ cat names.txt | grep 'B90[1-4]' # [a-zA-Z] i.e. ab...yzAB...YZ
 MM22B901 Mary Manickam
 ED22B902 Raman Singh
 ME22B903 Umair Ahmad
@@ -391,6 +391,8 @@ given as just github.com for example.
 We have trimmed output from top or botton using `head` & `tail`, `cut` trim the text from right or left (either by no. of fields or characters)
 - `-c` : The `-c` option tells `cut` to operate on character positions.
 - `-f` : Select the specified field, should use with `-d` to set the delimiter.
+    - `-f field_num` : Pick only the specified field number
+    - `-f start-end` : From start to end, if `start-` pick start to end of line, if `-end` pick starting of line to specified end field no.
 
 ```bash
 gphani@icme:~$ cat fields.txt
@@ -576,7 +578,7 @@ gphani@icme:~$ find . -size +5M # List file in PWD with size more than 5 Megabyt
 gphani@icme:~$ find . -empty # List empty files & directorys
 ```
 
-- `-perm PERMISSION` : List files & directorys with the given permissions.
+- `-perm PERMISSION` : List files & directorys with the given permissions (use  dash(`-`) with `-ugo` if permissions are not in Octal format ).
 ```bash
 gphani@icme:~$ find . -perm 777
 ./Website_Demo

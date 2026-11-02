@@ -494,3 +494,5 @@ When any command or script finishes running, it returns an integer value to the 
 - `bc` : A command‑line calculator that supports interactive calculations, scripting, variables, and advanced math functions via the `-l` math library. It uses C‑like syntax and can perform operations such as addition, division, exponentiation, trigonometric functions, and base conversions.
 
 - `test` : Evaluates conditional expressions, returning 0 if true and 1 if false, and is widely used in shell scripting for file checks, string comparisons, and numeric tests (use `test -e file_name` to check if file exists or not).
+
+- `top` : It is a real-time process monitoring tool that displays system performance metrics such as CPU usage, memory utilization, load averages, and active processes. It runs interactively by default, refreshing data periodically, and allows you to manage processes directly from its interface

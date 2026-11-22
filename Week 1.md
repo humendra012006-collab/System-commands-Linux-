@@ -362,7 +362,7 @@ user@host:~$ cd [directory]
 - `~` : home directory (/home/username).
 ```bash
 user@host:~/Desktop/temp$ cd ~ # Return to user@host:~$
-user@host:~/Desktop/temp$ cd # same as cd ~ , back to home
+user@host:~$ cd # same as cd ~ , back to home
 ```
 - `-` : switch to privous directory
 ```bash
@@ -381,7 +381,7 @@ user@host:~$ cd /
 user@host:/$ pwd # output : /
 ```
 ## Inode Number of file
-An inode is a data structure on a filesystem that stores information about a file or directory (except its name or data).vInode Information Includes:
+An inode is a data structure on a filesystem that stores information about a file or directory (except its name or data). Inode Information Includes:
 - File Type
 - Permissions
 - Owner

@@ -410,6 +410,7 @@ Similar to array in any other languages we have indices with there corresponding
     colors[1]="green"
     colors[3]="blue"   # Index 2 is left empty
     ```
+    - NOTE : If defining using Method 1 or Method 2, there is no need to declare it.
 - **Accessing Elements** : To access elements, we can use curly braces `${}` along with the array name and index (usually starting index is `0`).
 
     | Operation|Syntax|Example : fruits=("apple" "banana" "cherry")|Result|
@@ -447,3 +448,13 @@ echo "${!capitals[@]}" # Print all keys (France Japan Canada)
 
 echo "${capitals[@]}" # Print all values (Paris Tokyo Ottawa)
 ```
+
+# Extra Command
+
+- `uniq` : The `uniq` command in Linux is used to filter out adjacent duplicate lines from text input, whether from a file or standard input. It’s often paired with `sort` because uniq only detects duplicates that are next to each other.
+    - Use `-c` (count occurence : Prefixes each line with the number of times it appears), `-d` (Show only duplicates), `-u` (Show only unique lines) 
+    ```bash
+    uniq [OPTIONS] [INPUT_FILE [OUTPUT_FILE]] 
+    # OR
+    sort [INPUT_FILE] | uniq 
+    ```

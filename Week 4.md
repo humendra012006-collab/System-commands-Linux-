@@ -168,6 +168,7 @@ command | egrep [options] 'PATTERN'
 | `-n` | Show line numbers with matches | `egrep -n 'error' logfile.txt` |
 | `-r` | Recursive search in directories | `egrep -r 'error' /var/logs/` |
 | `-w` | Match whole words only | `egrep -w 'error' logfile.txt` |
+| `-o` | Only the matching parts of the lines | `egrep -o 'error' logfile.txt` |
 
 ## Linux Command-Line Exercises: grep and egrep
 Below is the complete record of file inspection and pattern-matching commands performed on names.txt.

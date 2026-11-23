@@ -28,13 +28,56 @@ Shell scripting in Linux is not limited to any specific language. The shell acts
 | `$-` | Current shell flags |
 | `$_` | Last argument of previous command |
 
+- Example
+```bash
+gphani@icme:~$ cat s1.sh
+#!/bin/bash
+echo I am invoked as:
+echo $0
+echo "First argument : ${1}"
+gphani@icme:~$ ./s1.sh Hello
+I am invoked as:
+./s1.sh
+First argument : Hello
+gphani@icme:~$ pwd
+/home/gphani
+gphani@icme:~$ /home/gphani/s1.sh Hello
+I am invoked as:
+/home/gphani/s1.sh
+First argument : Hello
+gphani@icme:~$ cd /usr/bin
+gphani@icme:/usr/bin$ ../../home/gphani/s1.sh Last
+I am invoked as:
+../../home/gphani/s1.sh
+First argument : Last
+```
 ### Command substitution
 Initialize a variable with result of some command.
 ```bash
 var=`command`
 # OR
 var=$(command)
+
 ```
+### Variable using `export` :
+1. ( Executed vs. Sourced ) with a normal variable :
+
+Suppose `vars.sh` contains:
+```bash
+#!/bin/bash
+NORMAL_VAR="hello"
+```
+- **Executed** (`./vars.sh`): Runs in a child shell. When it finishes, `echo "$NORMAL_VAR"` in terminal is empty.   
+- **Sourced** (`. vars.sh`): Runs in current shell. Afterward, `echo "$NORMAL_VAR"` prints `hello`, but if we then run `./child.sh`, `child.sh` will not see `NORMAL_VAR` unless exported.
+2. ( Executed vs. Sourced ) with a `export` variable :
+
+Suppose env_setup.sh contains:
+```bash
+#!/bin/bash
+export API_ENV="staging"
+```
+- **Executed** (`./env_setup.sh`): `API_ENV` exists only while `env_setup.sh` (and anything it launches) is running. Once `./env_setup.sh` exits, current shell does not have `API_ENV`.
+- **Sourced** (`. env_setup.sh`): `API_ENV` is set in current shell and passed to any command or script that we run next (e.g., `./app.sh` sees `API_ENV=staging`).
 ## Input & Output in Schell Scripts
 ### Output
 - `echo`: Terminates with a newline if `-n` option not given
@@ -130,7 +173,7 @@ if [ -e file ]; then
 fi
 ```
 ---
-#### File and directory conditions
+#### Unary File and directory comparisons
 These conditions check whether a file or directory exists and what its properties are.
 | Condition | Meaning |
 | --- | --- |
@@ -150,7 +193,7 @@ These conditions check whether a file or directory exists and what its propertie
 
 - There are more conditions to check.
 ---
-#### String conditions
+#### String comparisons
 These conditions are used to compare strings or check whether a string is empty.
 | Condition | Meaning |
 | --- | --- |
@@ -162,7 +205,7 @@ These conditions are used to compare strings or check whether a string is empty.
 | `"$str1" > "$str2"` |	Lexicographically greater than (inside `[[ ]]`) |
 
 ---
-#### Numeric conditions
+#### Numeric comparisons
 These conditions compare integer values.
 | Condition | Meaning |
 | --- | --- |
@@ -173,6 +216,15 @@ These conditions compare integer values.
 | `$n1 -lt $n2` | Check if n1 is less than n2 |
 | `$n1 -ne $n2` | Check if n1 is not equal to n2 |
 ---
+#### Binary file comparisons
+| Condition | Meaning |
+| --- | --- |
+| `file1 -nt file2` | Check if file1 is newer than file2 |
+| `file1 -ot file2` | Check if file1 is older than file2 |
+
+---
+
+
 3. **Double Brackets [[ exprn ]]**: Supports pattern matching (like `[[ $pasword =~ ^[0-9]+[A-Z][a-z] ]]`) and regular expressions without unexpected word splitting on unquoted variables.
 - Bash also supports regular expressions using the `=~` operator inside `[[ ]]`
 - Syntax :
@@ -286,7 +338,119 @@ fi
 ```
 ---
 ## Loops
+Here basic syntax only detail description is present in [week 7](./Week%207.md)
+- Set **IFS** (Internal Field Separator) if required.
+### for do loop :
+Commands are executed once for each item in the list, space is the field delimiters
+```bash
+for var in list
+do
+commands
+done
+```
+### while do loop :
+Commands are executed only if condition returns `true`
+```bash
+while condition
+do
+commands
+done
+```
+### until do loop :
+Commands are executed only if condition returns `false`, opposite of while loop.
+```bash
+until condition
+do
+commands
+done
+```
 ## Functions
+A function in Bash is a reusable block of commands that we define once and execute whenever we need by calling it.
+- Supports Recursive function call (A function can call itself)
+- We can call one funtion from another function.
+### Define a function : 
+In Bash, we can define a function in two common syntaxes.
+1. Using the `function` keyword
+    ```bash
+    function greet {
+        echo "Hello, World!"
+    }
+    ```
+2. Without the function keyword (commonly used)
+    ```bash
+    greet() {
+        echo "Hello, World!"
+    }
+    ```
+### How to call (execute) a function :
+We can call a function just by writing it's name, after defining it.
+```bash
+#!/bin/bash
+greet() {
+    echo "Hello, World!"
+}
+echo "Script started"
+greet # function calling
+echo "Script finished"
+```
+### Passing arguments to functions :
+Just like a script accepts command-line arguments, a function can also accept arguments when it is called, Using positional arguments.
+```bash
+greet() {
+    echo "Hello, $1"
+}
+greet Rahul
+greet Priya
+greet Aman
+# Output :
+# Hello, Rahul
+# Hello, Priya
+# Hello, Aman
+```
+### Returning a value from a function :
+In Bash, `return` is different from the `return` statement in languages such as C, Java or Python.
+
+- Bash functions use `return` primarily to `return` an **exit status** (a number from 0 to 255), not an arbitrary value like a string or a calculated number.
+```bash
+#!/bin/bash
+check() {
+    if (( $1 > 10 )); then
+        return 0
+    else
+        return 1
+    fi
+}
+check 15
+if [[ $? -eq 0 ]]; then # $? exit status of pervious command
+    echo "Number is greater than 10"
+else
+    echo "Number is 10 or less"
+fi
+
+# Output : Number is greater than 10
+```
+- But, if we want a function to produce a string, a number or other actual data, we generally use `echo` or `printf` to produce data and capture its output using command substitution.
+    - This is the common way to get a function's data output in Bash.
+    - Use `local` keyword to restrict a variable's scope to the function.
+```bash
+#!/bin/bash
+add() {
+    local sum=$(( $1 + $2 )) # sum is local to function
+    echo "$sum"
+}
+result=$(add 10 20)
+echo "Result: $result" # Output : Result: 30
+```
+- OR, Using variables declared inside a function without `local`, which are generally accessible throughout the current shell environment (unless they are otherwise scoped), even after the function finishes.
+```bash
+#!/bin/bash
+greet() {
+    local name="Rahul"
+    echo "Hello, $name"
+}
+greet
+echo "$name" # Output : Hello, Rahul
+```
 
 ## Login shell and Non-login shell
 In Bash, Login shells and Non-login shells are two types of shell sessions. The difference is mainly how the shell starts and which configuration files it reads during startup, This concept is important because it explains why sometimes your environment variables, PATH, aliases, or other settings are available in one terminal but not another.
@@ -359,6 +523,29 @@ cd /home
     - The variable `name` is created inside the script's shell (subshell).
     - The working directory changes to `/home` inside that shell (subshell).
     - Once the script finishes, those changes disappear from the perspective of your original shell.
+### Common Example
+```bash
+gphani@icme:~$ cat s1.sh
+#!/bin/bash
+echo PID of the process running this script is:
+echo $$
+ps --forest
+gphani@icme:~$ echo $$
+6446
+gphani@icme:~$ ./s1.sh
+PID of the process running this script is:
+11107
+  PID TTY          TIME CMD
+ 6446 pts/0    00:00:00 bash
+11107 pts/0    00:00:00  \_ s1.sh
+11108 pts/0    00:00:00      \_ ps
+gphani@icme:~$ source s1.sh # or . s1.sh
+PID of the process running this script is:
+6446
+  PID TTY          TIME CMD
+ 6446 pts/0    00:00:00 bash
+ 6446 pts/0    00:00:00  \_ ps
+```
 
 ### Script location
 Use absolute path or relative path while executing the script.

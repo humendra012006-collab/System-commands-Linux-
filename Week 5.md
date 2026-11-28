@@ -433,6 +433,8 @@ Similar to array in any other languages we have indices with there corresponding
     ```
 ### Associative Arrays (Key-Value Pairs)
 If we need keys that are strings instead of numbers, we must explicitly **declare** the array using `declare -A`.
+- `${!mymap[@]}` returns all keys.
+- `${mymap[@]}` returns all values.
 ```bash
 declare -A capitals # Declare an associative array
 

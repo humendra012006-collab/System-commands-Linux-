@@ -160,7 +160,7 @@ if test -e file; then
 fi
 ```
 
-2. **Single Brackets [ exprn ]**: Functionally equivalent to the test command (`[` is an alias/command for test in POSIX shells).
+2. **Single Brackets ( `[ exprn ]` )**: Functionally equivalent to the test command (`[` is an alias/command for test in POSIX shells).
 - Important syntax detail: Spaces must appear inside the brackets **[ exprn ]**, not [exprn], and variables are typically quoted (`"$var"`) to prevent word-splitting or globbing issues.
 - Syntax :
 ```bash
@@ -178,13 +178,13 @@ These conditions check whether a file or directory exists and what its propertie
 | Condition | Meaning |
 | --- | --- |
 | `-e file` | Checks whether a file or directory exists |
+| `-s file` | Checks whether it exists and has a non-zero size |
 | `-f file` | Checks whether it exists and is a regular file |
 | `-d file` | Checks whether it exists and is a directory |
+| `-L file` | Checks whether it is a symbolic link |
 | `-r file` | Checks whether it is readable |
 | `-w file` | Checks whether it is writable |
 | `-x file` | Checks whether it is executable |
-| `-s file` | Checks whether it exists and has a non-zero size |
-| `-L file` | Checks whether it is a symbolic link |
 | `-O file` | Checks whether the current user owns it |
 | `-G file` | Checks whether the current user's group owns it |
 | `file1 -nt file2` | Checks whether file1 is newer than file2 |
@@ -225,7 +225,7 @@ These conditions compare integer values.
 ---
 
 
-3. **Double Brackets [[ exprn ]]**: Supports pattern matching (like `[[ $pasword =~ ^[0-9]+[A-Z][a-z] ]]`) and regular expressions without unexpected word splitting on unquoted variables.
+3. **Double Brackets ( `[[ exprn ]]` )**: Supports pattern matching (like `[[ $pasword =~ ^[0-9]+[A-Z][a-z] ]]`) and regular expressions without unexpected word splitting on unquoted variables.
 - Bash also supports regular expressions using the `=~` operator inside `[[ ]]`
 - Syntax :
 ```bash
@@ -258,7 +258,7 @@ fi
     | `-t 2` | Checks whether stderr (file descriptor 2) is connected to a terminal |
 
 ---
-4. **Double Parentheses ((( exprn )))**: Used for arithmetic conditions involving integers.
+4. **Double Parentheses ( `(( exprn ))` )**: Used for arithmetic conditions involving integers.
 - Variables inside `(( ... ))` can be referenced directly (like `v` or `$v`), and standard math operators such as `**` (exponentiation), `>`, `<`, `==`, `&&`, and `||` work naturally.
 - Syntax :
 ```bash
@@ -272,11 +272,11 @@ fi
 ```
 
 ---
-5. **A Command (wc -l file)**:
+5. **A Command (`wc -l file`)**:
 
 - Syntax :
 ```bash
-if command; then # ture or false based on the status of command
+if command; then # ture or false based on the return status of command
     command
 fi
 # Example
@@ -337,7 +337,7 @@ if (( a > 10 && b < 20 )); then
 fi
 ```
 ---
-## Loops
+## Loops in Bash
 Here basic syntax only detail description is present in [week 7](./Week%207.md)
 - Set **IFS** (Internal Field Separator) if required.
 ### for do loop :
@@ -445,11 +445,13 @@ echo "Result: $result" # Output : Result: 30
 ```bash
 #!/bin/bash
 greet() {
-    local name="Rahul"
+    name="Rahul"
     echo "Hello, $name"
 }
 greet
-echo "$name" # Output : Hello, Rahul
+echo "Outside function: $name" 
+# Output : Hello, Rahul
+#          Outside function: Rahul
 ```
 
 ## Login shell and Non-login shell
@@ -559,7 +561,7 @@ Use absolute path or relative path while executing the script.
 ```bash
 echo $PATH # /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 # suppose script "script.sh" is present in "/usr/bin" 
-backup.sh # simply typing the name of script works 
+script.sh # simply typing the name of script works 
 # The shell searches PATH and finds your script.
 ```
 - OR, temporarily add it for the current terminal session:
@@ -574,7 +576,7 @@ export PATH="$PATH:/home/username/scripts"
 - `stat` : displays detailed information about a file or file system, including size, permissions, ownership, timestamps, inode, and device data.
 
 ## `make` Command
-The`make` command in Linux is used to automatically build and manage programs by reading instructions from a file called **Makefile**. It helps compile source code, rebuild only the files that have changed, and execute defined tasks.
+The `make` command in Linux is used to automatically build and manage programs by reading instructions from a file called **Makefile**. It helps compile source code, rebuild only the files that have changed, and execute defined tasks.
 - But we can do more with it rather than just compilation.
 - Syntax
 ```bash
